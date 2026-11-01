@@ -4,7 +4,7 @@ import (
 	"slices"
 	"testing"
 
-	"github.com/barnuri/ghx/internal/config"
+	"github.com/paradoxon-tools/ghx/internal/config"
 )
 
 func TestNeedsToken(t *testing.T) {

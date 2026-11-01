@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 
-repo="barnuri/ghx"
+repo="paradoxon-tools/ghx"
 install_dir="${GHX_INSTALL_DIR:-$HOME/.local/bin}"
 shim="${GHX_SHIM:-1}"
 base_url="https://github.com/$repo/releases/latest/download"

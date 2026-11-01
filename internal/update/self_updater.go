@@ -6,11 +6,11 @@ import (
 	"path/filepath"
 	"runtime"
 
-	"github.com/barnuri/ghx/internal/release"
+	"github.com/paradoxon-tools/ghx/internal/release"
 )
 
 const (
-	ghxRepo          = "barnuri/ghx"
+	ghxRepo          = "paradoxon-tools/ghx"
 	ghxChecksumsName = "checksums.txt"
 	devVersion       = "dev"
 )

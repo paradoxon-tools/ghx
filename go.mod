@@ -1,4 +1,4 @@
-module github.com/barnuri/ghx
+module github.com/paradoxon-tools/ghx
 
 go 1.26.4
 

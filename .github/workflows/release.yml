@@ -4,9 +4,10 @@ on:
   push:
     branches: [master]
   pull_request:
+  workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   test:
@@ -24,10 +25,12 @@ jobs:
 
   release:
     needs: test
-    if: github.event_name == 'push'
+    if: github.event_name == 'workflow_dispatch'
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     env:
-      VERSION: 0.1.${{ github.run_number }}
+      VERSION: 1.0.${{ github.run_number }}
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-go@v6

@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/barnuri/ghx/internal/config"
+	"github.com/paradoxon-tools/ghx/internal/config"
 )
 
 func noRemote(string) string { return "" }

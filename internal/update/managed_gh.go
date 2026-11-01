@@ -6,8 +6,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/barnuri/ghx/internal/ghbin"
-	"github.com/barnuri/ghx/internal/release"
+	"github.com/paradoxon-tools/ghx/internal/ghbin"
+	"github.com/paradoxon-tools/ghx/internal/release"
 )
 
 const (

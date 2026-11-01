@@ -1,7 +1,7 @@
 $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue'
 
-$repo = 'barnuri/ghx'
+$repo = 'paradoxon-tools/ghx'
 $baseUrl = "https://github.com/$repo/releases/latest/download"
 $installDir = if ($env:GHX_INSTALL_DIR) { $env:GHX_INSTALL_DIR } else { Join-Path $env:LOCALAPPDATA 'Programs\ghx' }
 $shim = $env:GHX_SHIM -ne '0'

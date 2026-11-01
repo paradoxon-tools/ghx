@@ -1,6 +1,6 @@
 package resolve
 
-import "github.com/barnuri/ghx/internal/config"
+import "github.com/paradoxon-tools/ghx/internal/config"
 
 type Match struct {
 	ProfileName string

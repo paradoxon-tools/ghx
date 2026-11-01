@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/barnuri/ghx/internal/config"
+	"github.com/paradoxon-tools/ghx/internal/config"
 )
 
 func newRepo(t *testing.T, localValues map[string]string) string {

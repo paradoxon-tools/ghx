@@ -6,7 +6,7 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/barnuri/ghx/internal/config"
+	"github.com/paradoxon-tools/ghx/internal/config"
 )
 
 const (

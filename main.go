@@ -4,14 +4,14 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/barnuri/ghx/internal/config"
-	"github.com/barnuri/ghx/internal/ghbin"
-	"github.com/barnuri/ghx/internal/gitident"
-	"github.com/barnuri/ghx/internal/platform"
-	"github.com/barnuri/ghx/internal/proxy"
-	"github.com/barnuri/ghx/internal/release"
-	"github.com/barnuri/ghx/internal/resolve"
-	"github.com/barnuri/ghx/internal/update"
+	"github.com/paradoxon-tools/ghx/internal/config"
+	"github.com/paradoxon-tools/ghx/internal/ghbin"
+	"github.com/paradoxon-tools/ghx/internal/gitident"
+	"github.com/paradoxon-tools/ghx/internal/platform"
+	"github.com/paradoxon-tools/ghx/internal/proxy"
+	"github.com/paradoxon-tools/ghx/internal/release"
+	"github.com/paradoxon-tools/ghx/internal/resolve"
+	"github.com/paradoxon-tools/ghx/internal/update"
 )
 
 var version = "dev"
@@ -48,14 +48,13 @@ func run(args []string) error {
 	stateDir := config.StateDir()
 	updater := newUpdater(cfg, stateDir)
 	if len(args) == 1 && args[0] == backgroundUpdateFlag {
-		updater.RunQuietly()
-		return nil
+		return fmt.Errorf("background updates are disabled; run ghx ghx update explicitly")
 	}
 	ghPath, err := locateGh(cfg, updater)
 	if err != nil {
 		return err
 	}
-	scheduleUpdate(cfg, stateDir)
+
 	cwd, err := os.Getwd()
 	if err != nil {
 		return err
@@ -123,17 +122,6 @@ func locateGh(cfg config.Config, updater update.Updater) (string, error) {
 		return "", fmt.Errorf("install gh: %w", err)
 	}
 	return updater.Gh.Path(), nil
-}
-
-func scheduleUpdate(cfg config.Config, stateDir string) {
-	if cfg.DisableUpdates || os.Getenv(noUpdateEnv) != "" || !update.IsDue(stateDir) {
-		return
-	}
-	executable, err := os.Executable()
-	if err != nil || update.MarkChecked(stateDir) != nil {
-		return
-	}
-	_ = platform.StartDetached(executable, backgroundUpdateFlag)
 }
 
 // applyGitIdentity only warns on failure, so a git problem never blocks the gh command.

@@ -1,5 +1,9 @@
 # ghx
 
+Maintained fork of [ghx by barnuri](https://github.com/barnuri/ghx), under the original MIT license.
+Distribution uses manually triggered GitHub Releases in paradoxon-tools/ghx; no npm or other package registry is used.
+Background updates are removed. Run `ghx ghx update` explicitly to install a release from this fork.
+
 Use the right GitHub account in every folder. `ghx` is a thin wrapper around the official
 [`gh`](https://cli.github.com) CLI. It picks a gh account from the directory you are in, then
 runs the real `gh` with your arguments unchanged.
@@ -10,20 +14,20 @@ runs the real `gh` with your arguments unchanged.
 - gh keeps its own updates. ghx never patches or bundles it.
 - macOS, Linux and Windows. One static binary, no runtime.
 - Installs as `gh`, so scripts, editors and aliases use it with no changes.
-- Updates itself in the background, once a day.
+- Updates only when explicitly requested.
 
 ## Install
 
 macOS / Linux:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/barnuri/ghx/master/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/paradoxon-tools/ghx/master/install.sh | sh
 ```
 
 Windows (PowerShell):
 
 ```powershell
-irm https://raw.githubusercontent.com/barnuri/ghx/master/install.ps1 | iex
+irm https://raw.githubusercontent.com/paradoxon-tools/ghx/master/install.ps1 | iex
 ```
 
 The installer downloads the latest release for your OS and CPU, checks its sha256, and
@@ -39,7 +43,7 @@ real gh, so the shim never calls itself. Set `GHX_SHIM=0` to install only `ghx`,
 `GHX_INSTALL_DIR` to pick another dir. On Windows, run the installer as Administrator when gh
 is in the system PATH, because Windows searches the system PATH before the user PATH.
 
-With Go: `go install github.com/barnuri/ghx@latest`, then `alias gh=ghx`.
+With Go: `go install github.com/paradoxon-tools/ghx@latest`, then `alias gh=ghx`.
 
 ## Configuration
 
@@ -87,7 +91,7 @@ Full example: [examples/config.yaml](examples/config.yaml).
 | `remote_user` | `true` uses the username in an https `origin` remote URL. See below |
 | `default` | profile for folders outside every `dirs` entry. Default: plain gh |
 | `manage_gh` | `true` makes ghx download gh and keep it updated. Default: use gh from `PATH` |
-| `disable_updates` | `true` stops the daily ghx update check |
+| `disable_updates` | retained for compatibility; background updates are always disabled |
 
 ### Per-repo file: `.ghx`
 
@@ -209,11 +213,7 @@ when PATH does not have it.
 
 ## Updates
 
-Once a day ghx starts a background process that downloads the latest ghx release, checks its
-sha256 and replaces the binary. With `manage_gh: true` it does the same for gh from
-[cli/cli releases](https://github.com/cli/cli/releases). The result goes to `update.log` in the
-ghx cache dir (`~/Library/Caches/ghx`, `~/.cache/ghx` or `%LOCALAPPDATA%\ghx`).
-Set `GHX_NO_UPDATE=1` or `disable_updates: true` to turn it off.
+Updates run only through `ghx ghx update` and use releases from paradoxon-tools/ghx.
 
 ## Development
 
@@ -222,8 +222,8 @@ go test ./...
 vhs demo/demo.tape   # re-record docs/demo.gif with a stub gh and demo accounts
 ```
 
-Every push to `master` runs the tests on macOS, Linux and Windows, then publishes release
-`v0.1.<run>` with binaries for darwin, linux and windows on amd64 and arm64.
+Every push to `master` runs the tests on macOS, Linux and Windows, and manual workflow dispatch publishes release
+`v1.0.<run>` with binaries for darwin, linux and windows on amd64 and arm64.
 
 ## License
 
