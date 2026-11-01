@@ -3,6 +3,7 @@ package proxy
 import (
 	"bytes"
 	"fmt"
+	"os"
 	"os/exec"
 	"strings"
 
@@ -32,6 +33,15 @@ func FetchToken(ghPath string, profile config.Profile) (string, error) {
 	var stderr bytes.Buffer
 	host := profile.HostOrDefault()
 	command := exec.Command(ghPath, "auth", "token", "--hostname", host, "--user", profile.User)
+	// Explicit profile lookup must read the stored login, even when the caller has a token.
+	for _, entry := range os.Environ() {
+		key, _, _ := strings.Cut(entry, "=")
+		switch strings.ToUpper(key) {
+		case "GH_TOKEN", "GITHUB_TOKEN", "GH_ENTERPRISE_TOKEN", "GITHUB_ENTERPRISE_TOKEN", "GH_DEBUG":
+			continue
+		}
+		command.Env = append(command.Env, entry)
+	}
 	command.Stderr = &stderr
 	output, err := command.Output()
 	if err != nil {

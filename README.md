@@ -47,6 +47,16 @@ With Go: `go install github.com/paradoxon-tools/ghx@latest`, then `alias gh=ghx`
 
 ## Configuration
 
+### Profile integration API
+
+`ghx ghx profiles list --json` returns `{ "version": 1, "profiles": [{ "id": "work", "user": "login", "host": "github.com" }] }`.
+The list is sorted by profile ID and excludes directory mappings and secrets.
+`ghx ghx profiles token work` prints the stored token for that profile, independently of the
+current directory and ambient token variables. Treat its stdout as a secret. Neither command
+changes Git identity or the active gh account. Unknown profiles fail rather than falling back.
+For ordinary commands, `GHX_PROFILE=work gh pr list` explicitly selects a profile; automatic
+directory selection continues to work as before.
+
 1. Log in to each account once. gh stores all of them:
 
    ```sh

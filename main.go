@@ -28,6 +28,7 @@ Commands:
   current   Print only the profile name for the current directory (empty when none)
   update    Update ghx now (and gh when manage_gh is true)
   version   Show the ghx version
+  profiles  Integration API: profiles list --json; profiles token <id>
   help      Show this help
 
 Every other command goes to the real gh unchanged.`
@@ -44,6 +45,9 @@ func run(args []string) error {
 	cfg, err := config.Load(config.DefaultPath())
 	if err != nil {
 		return err
+	}
+	if len(args) > 1 && args[0] == metaCommand && args[1] == "profiles" {
+		return runProfiles(cfg, args[2:])
 	}
 	stateDir := config.StateDir()
 	updater := newUpdater(cfg, stateDir)
